@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_2685aee2598240f8419dcd5670e670ed {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    width: 300px;
+    background-color: white;
+    border: 2px solid #0078d4;
+    z-index: 9999;
+    font-size: 13px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+">
+    <h4 style="margin: 0 0 12px 0; color: #0078d4; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">
+        📍 Llegenda
+    </h4>
+    <p style="margin: 8px 0;">
+        <span style="display: inline-block; width: 22px; height: 22px; background: #e74856; border-radius: 50%; margin-right: 8px; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></span>
+        <strong>Barcelona</strong> (epicentre)
+    </p>
+    <p style="margin: 8px 0;">
+        <span style="display: inline-block; width: 22px; height: 22px; background: #ff8c00; border-radius: 50%; margin-right: 8px; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></span>
+        <strong>Ciutat de Mèxic</strong> (exili)
+    </p>
+    <p style="margin: 8px 0;">
+        <span style="display: inline-block; width: 22px; height: 22px; background: #0078d4; border-radius: 50%; margin-right: 8px; border: 2px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.3);"></span>
+        Altres ciutats
+    </p>
+    <hr style="margin: 10px 0; border: none; border-top: 1px solid #ddd;">
+    <p style="margin: 8px 0; font-size: 11px; color: #666;">
+        <strong>Mida:</strong> volum de correspondència<br>
+        <strong>Intensitat línia:</strong> nombre de cartes
+    </p>
+</div>
+    
+<div style="
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 700px;
+    background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+    color: white;
+    padding: 15px 25px;
+    z-index: 9999;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    font-family: Arial, sans-serif;
+">
+    🗺️ Mapa Geogràfic - Fons Pere Calders
+    <div style="font-size: 13px; font-weight: normal; margin-top: 5px; opacity: 0.9;">
+        Visualització de fluxos epistolars (1944-1999)
+    </div>
+</div>
+    
+<div style="
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 200px;
+    background-color: white;
+    border: 2px solid #0078d4;
+    z-index: 9999;
+    font-size: 12px;
+    padding: 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    font-family: Arial, sans-serif;
+">
+    <h4 style="margin: 0 0 10px 0; color: #0078d4; font-size: 14px;">📊 Estadístiques</h4>
+    <p style="margin: 5px 0;"><strong>Ciutats:</strong> 23</p>
+    <p style="margin: 5px 0;"><strong>Rutes:</strong> 28</p>
+    <p style="margin: 5px 0;"><strong>Cartes:</strong> 96</p>
+</div>
+    
+            <div class="folium-map" id="map_2685aee2598240f8419dcd5670e670ed" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_2685aee2598240f8419dcd5670e670ed = L.map(
+                "map_2685aee2598240f8419dcd5670e670ed",
+                {
+                    center: [35.0, -10.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 3,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_08f89f2f1aa3e30f497c16ec6a6eb538 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_08f89f2f1aa3e30f497c16ec6a6eb538.addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var circle_marker_459c5c127531e485d07c1dca1f1a8d61 = L.circleMarker(
+                [41.5804, 2.5488],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_f4bdddfe4ff560979958613d20d9c591 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d487138b0146146fa0b42d05d098a893 = $(`<div id="html_d487138b0146146fa0b42d05d098a893" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Arenys de Mar         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 2</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 2</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_f4bdddfe4ff560979958613d20d9c591.setContent(html_d487138b0146146fa0b42d05d098a893);
+            
+        
+
+        circle_marker_459c5c127531e485d07c1dca1f1a8d61.bindPopup(popup_f4bdddfe4ff560979958613d20d9c591)
+        ;
+
+        
+    
+    
+            circle_marker_459c5c127531e485d07c1dca1f1a8d61.bindTooltip(
+                `<div>
+                     Arenys de Mar
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_a0d94582ca5409e6afc48afcd13112a3 = L.marker(
+                [41.5804, 2.5488],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_aca3b1b71426efd9a15a60d5698e502f = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eArenys de Mar\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_a0d94582ca5409e6afc48afcd13112a3.setIcon(div_icon_aca3b1b71426efd9a15a60d5698e502f);
+            
+    
+            var circle_marker_32d637d6e3470ebd06447cfb0e5e1222 = L.circleMarker(
+                [41.3874, 2.1686],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#e74856", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 18, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_ade27d5f2c24fc665184a2d933fe4cbf = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2eb5375d12592581e94be18192c72a43 = $(`<div id="html_2eb5375d12592581e94be18192c72a43" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Barcelona         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 91</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 53</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 38</p>     </div>     </div>`)[0];
+                popup_ade27d5f2c24fc665184a2d933fe4cbf.setContent(html_2eb5375d12592581e94be18192c72a43);
+            
+        
+
+        circle_marker_32d637d6e3470ebd06447cfb0e5e1222.bindPopup(popup_ade27d5f2c24fc665184a2d933fe4cbf)
+        ;
+
+        
+    
+    
+            circle_marker_32d637d6e3470ebd06447cfb0e5e1222.bindTooltip(
+                `<div>
+                     Barcelona
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d8444d5c71ab02e389a7615f99a4daeb = L.marker(
+                [41.3874, 2.1686],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_bbb066ec825e45d1c917648fb90458e4 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eBarcelona\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_d8444d5c71ab02e389a7615f99a4daeb.setIcon(div_icon_bbb066ec825e45d1c917648fb90458e4);
+            
+    
+            var circle_marker_5b03fd915f7386c6c8e4167d095e6669 = L.circleMarker(
+                [41.5025, 2.1083],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_c22ce43d8fc41dc564fdc2f86cacc81f = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e12c5ce0f3d1002c93537194f8c3ff49 = $(`<div id="html_e12c5ce0f3d1002c93537194f8c3ff49" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Bellaterra         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 7</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 3</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 4</p>     </div>     </div>`)[0];
+                popup_c22ce43d8fc41dc564fdc2f86cacc81f.setContent(html_e12c5ce0f3d1002c93537194f8c3ff49);
+            
+        
+
+        circle_marker_5b03fd915f7386c6c8e4167d095e6669.bindPopup(popup_c22ce43d8fc41dc564fdc2f86cacc81f)
+        ;
+
+        
+    
+    
+            circle_marker_5b03fd915f7386c6c8e4167d095e6669.bindTooltip(
+                `<div>
+                     Bellaterra
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_370f47cf4989d75e5a01f472af74d800 = L.marker(
+                [41.5025, 2.1083],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_08e622d6bf6bdb7afe32a2c30943c3f9 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eBellaterra\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_370f47cf4989d75e5a01f472af74d800.setIcon(div_icon_08e622d6bf6bdb7afe32a2c30943c3f9);
+            
+    
+            var circle_marker_1e869d5949c9b6072775889f3ded5a56 = L.circleMarker(
+                [44.8378, -0.5792],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_50316386fabd999ea3dd17e10152b776 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_36d8ab1fbca797df2478c1b65de7cd6b = $(`<div id="html_36d8ab1fbca797df2478c1b65de7cd6b" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Bordeus         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> França</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_50316386fabd999ea3dd17e10152b776.setContent(html_36d8ab1fbca797df2478c1b65de7cd6b);
+            
+        
+
+        circle_marker_1e869d5949c9b6072775889f3ded5a56.bindPopup(popup_50316386fabd999ea3dd17e10152b776)
+        ;
+
+        
+    
+    
+            circle_marker_1e869d5949c9b6072775889f3ded5a56.bindTooltip(
+                `<div>
+                     Bordeus
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_da59f41f706f6f9de9f2ec577de0e3cb = L.marker(
+                [44.8378, -0.5792],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_6d91f7fbeb0f6793d21b95a57ef1a7b0 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eBordeus\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_da59f41f706f6f9de9f2ec577de0e3cb.setIcon(div_icon_6d91f7fbeb0f6793d21b95a57ef1a7b0);
+            
+    
+            var circle_marker_f92ea0c28651df5e3a33002bfdf95d1e = L.circleMarker(
+                [19.4326, -99.1332],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#ff8c00", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_3a961e94878b6095aca452b686cbd733 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_37e5e96cdd9eb408182c90bbf9a3975a = $(`<div id="html_37e5e96cdd9eb408182c90bbf9a3975a" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Ciutat de Mèxic         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Mèxic</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 44</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 31</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 13</p>     </div>     </div>`)[0];
+                popup_3a961e94878b6095aca452b686cbd733.setContent(html_37e5e96cdd9eb408182c90bbf9a3975a);
+            
+        
+
+        circle_marker_f92ea0c28651df5e3a33002bfdf95d1e.bindPopup(popup_3a961e94878b6095aca452b686cbd733)
+        ;
+
+        
+    
+    
+            circle_marker_f92ea0c28651df5e3a33002bfdf95d1e.bindTooltip(
+                `<div>
+                     Ciutat de Mèxic
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_7684161ba37c54c79c65d51d98cb696d = L.marker(
+                [19.4326, -99.1332],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_a4d0fa349637ad989655f355ce9f1803 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eCiutat de M\u00e8xic\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_7684161ba37c54c79c65d51d98cb696d.setIcon(div_icon_a4d0fa349637ad989655f355ce9f1803);
+            
+    
+            var circle_marker_89bf0604c7686e8a073ced710441d7b6 = L.circleMarker(
+                [41.0082, 28.9784],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_985f0a8f6f8bf8b20c470ab0dc4ac56d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_0c5db5087347d87d43ea59f1311d7aa5 = $(`<div id="html_0c5db5087347d87d43ea59f1311d7aa5" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Estambul         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Turquia</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_985f0a8f6f8bf8b20c470ab0dc4ac56d.setContent(html_0c5db5087347d87d43ea59f1311d7aa5);
+            
+        
+
+        circle_marker_89bf0604c7686e8a073ced710441d7b6.bindPopup(popup_985f0a8f6f8bf8b20c470ab0dc4ac56d)
+        ;
+
+        
+    
+    
+            circle_marker_89bf0604c7686e8a073ced710441d7b6.bindTooltip(
+                `<div>
+                     Estambul
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f9a8f279a867778f7093396bc8fc14ea = L.marker(
+                [41.0082, 28.9784],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_7f139cbb6f023bdb5f0eef97b0e0c025 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eEstambul\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_f9a8f279a867778f7093396bc8fc14ea.setIcon(div_icon_7f139cbb6f023bdb5f0eef97b0e0c025);
+            
+    
+            var circle_marker_ab61f1b4b9bdf67c250f5d7d7bd0cc75 = L.circleMarker(
+                [20.6597, -103.3496],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_312ac0b289e45ffb83a8ed34ce5f6e97 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3ace584d68e298b0ccd65e4bc73ce163 = $(`<div id="html_3ace584d68e298b0ccd65e4bc73ce163" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Guadalajara         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Mèxic</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_312ac0b289e45ffb83a8ed34ce5f6e97.setContent(html_3ace584d68e298b0ccd65e4bc73ce163);
+            
+        
+
+        circle_marker_ab61f1b4b9bdf67c250f5d7d7bd0cc75.bindPopup(popup_312ac0b289e45ffb83a8ed34ce5f6e97)
+        ;
+
+        
+    
+    
+            circle_marker_ab61f1b4b9bdf67c250f5d7d7bd0cc75.bindTooltip(
+                `<div>
+                     Guadalajara
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_577381c3d234f0ba1eb188dc047ee486 = L.marker(
+                [20.6597, -103.3496],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_94d1446801770cefc79ab510c20e0f4b = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eGuadalajara\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_577381c3d234f0ba1eb188dc047ee486.setIcon(div_icon_94d1446801770cefc79ab510c20e0f4b);
+            
+    
+            var circle_marker_61d11bb406bc313cd5a9707e11439c7f = L.circleMarker(
+                [51.5074, -0.1278],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_34f45440068775d2b0dba6eee11eadcf = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_b6177f55592faed4562ab55d19f5c476 = $(`<div id="html_b6177f55592faed4562ab55d19f5c476" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Londres         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Regne Unit</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 2</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_34f45440068775d2b0dba6eee11eadcf.setContent(html_b6177f55592faed4562ab55d19f5c476);
+            
+        
+
+        circle_marker_61d11bb406bc313cd5a9707e11439c7f.bindPopup(popup_34f45440068775d2b0dba6eee11eadcf)
+        ;
+
+        
+    
+    
+            circle_marker_61d11bb406bc313cd5a9707e11439c7f.bindTooltip(
+                `<div>
+                     Londres
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_393107817fc2268ae2e5f9e8b2a927bb = L.marker(
+                [51.5074, -0.1278],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_561b3e73a2fd2494aac1dad6184276b9 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eLondres\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_393107817fc2268ae2e5f9e8b2a927bb.setIcon(div_icon_561b3e73a2fd2494aac1dad6184276b9);
+            
+    
+            var circle_marker_7c27a542bf2f3d0a2021c858e863aa59 = L.circleMarker(
+                [40.4168, -3.7038],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_665b52a1fbeb04ef977d49a593c416ec = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f0803b89a1cc87b541d847039f1b003c = $(`<div id="html_f0803b89a1cc87b541d847039f1b003c" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Madrid         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_665b52a1fbeb04ef977d49a593c416ec.setContent(html_f0803b89a1cc87b541d847039f1b003c);
+            
+        
+
+        circle_marker_7c27a542bf2f3d0a2021c858e863aa59.bindPopup(popup_665b52a1fbeb04ef977d49a593c416ec)
+        ;
+
+        
+    
+    
+            circle_marker_7c27a542bf2f3d0a2021c858e863aa59.bindTooltip(
+                `<div>
+                     Madrid
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c8d744eb196c1b9a894c19579104ea2a = L.marker(
+                [40.4168, -3.7038],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_e0b47e1104cf2542ea7afddf1caaecc2 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eMadrid\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_c8d744eb196c1b9a894c19579104ea2a.setIcon(div_icon_e0b47e1104cf2542ea7afddf1caaecc2);
+            
+    
+            var circle_marker_a1bbaaee7a42d878b7ce3636e5efa78e = L.circleMarker(
+                [41.5908, 2.1722],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_a888b2fd9037ad488f51257709bf4e6a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_6a2aaf694517667239d622971c66bb24 = $(`<div id="html_6a2aaf694517667239d622971c66bb24" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             PalauSolità i Plegamans         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_a888b2fd9037ad488f51257709bf4e6a.setContent(html_6a2aaf694517667239d622971c66bb24);
+            
+        
+
+        circle_marker_a1bbaaee7a42d878b7ce3636e5efa78e.bindPopup(popup_a888b2fd9037ad488f51257709bf4e6a)
+        ;
+
+        
+    
+    
+            circle_marker_a1bbaaee7a42d878b7ce3636e5efa78e.bindTooltip(
+                `<div>
+                     PalauSolità i Plegamans
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_6c5cf88eed82abb87ba2201b4913c70b = L.marker(
+                [41.5908, 2.1722],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_7fcaef0db2312f027b1937c5cf6a6605 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003ePalauSolit\u00e0 i Plegamans\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_6c5cf88eed82abb87ba2201b4913c70b.setIcon(div_icon_7fcaef0db2312f027b1937c5cf6a6605);
+            
+    
+            var circle_marker_97b24902ce364e100f71410fed3f4de6 = L.circleMarker(
+                [40.4659, 0.1778],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_31a621ba9ca90a9b904e5df5cb9484e5 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_179631189b5d2749cece8b1a14a8c19d = $(`<div id="html_179631189b5d2749cece8b1a14a8c19d" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Sant Mateu         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 1</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 0</p>     </div>     </div>`)[0];
+                popup_31a621ba9ca90a9b904e5df5cb9484e5.setContent(html_179631189b5d2749cece8b1a14a8c19d);
+            
+        
+
+        circle_marker_97b24902ce364e100f71410fed3f4de6.bindPopup(popup_31a621ba9ca90a9b904e5df5cb9484e5)
+        ;
+
+        
+    
+    
+            circle_marker_97b24902ce364e100f71410fed3f4de6.bindTooltip(
+                `<div>
+                     Sant Mateu
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_df73f4820bfced85e8508741350b7f06 = L.marker(
+                [40.4659, 0.1778],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_f00d039012b161ab3cd910261adcd8e4 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eSant Mateu\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_df73f4820bfced85e8508741350b7f06.setIcon(div_icon_f00d039012b161ab3cd910261adcd8e4);
+            
+    
+            var circle_marker_67b11a3065983300f78fc754cf87a0ab = L.circleMarker(
+                [41.5539, 2.4009],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_45c049051fb7135f42215028247934e0 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ba744c75e9d16a27e29e3cefaff8b381 = $(`<div id="html_ba744c75e9d16a27e29e3cefaff8b381" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Argentona         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_45c049051fb7135f42215028247934e0.setContent(html_ba744c75e9d16a27e29e3cefaff8b381);
+            
+        
+
+        circle_marker_67b11a3065983300f78fc754cf87a0ab.bindPopup(popup_45c049051fb7135f42215028247934e0)
+        ;
+
+        
+    
+    
+            circle_marker_67b11a3065983300f78fc754cf87a0ab.bindTooltip(
+                `<div>
+                     Argentona
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_19d66d02ee254e51b333315ec0b4d446 = L.marker(
+                [41.5539, 2.4009],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_11dedb6f8530a4e863bdcd894f8289c5 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eArgentona\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_19d66d02ee254e51b333315ec0b4d446.setIcon(div_icon_11dedb6f8530a4e863bdcd894f8289c5);
+            
+    
+            var circle_marker_0cea8baa70ae40181de70485372ad5e9 = L.circleMarker(
+                [41.2855, 1.87],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_10f92447801a45bdff21bf9d5783c3fb = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a61915279b99a30ed4fea2713fac38b6 = $(`<div id="html_a61915279b99a30ed4fea2713fac38b6" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Begues         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_10f92447801a45bdff21bf9d5783c3fb.setContent(html_a61915279b99a30ed4fea2713fac38b6);
+            
+        
+
+        circle_marker_0cea8baa70ae40181de70485372ad5e9.bindPopup(popup_10f92447801a45bdff21bf9d5783c3fb)
+        ;
+
+        
+    
+    
+            circle_marker_0cea8baa70ae40181de70485372ad5e9.bindTooltip(
+                `<div>
+                     Begues
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3832192a7e4b282ffa96b1d7a7a956ed = L.marker(
+                [41.2855, 1.87],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_6adf3b142bff169067e2c0488d8de161 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eBegues\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_3832192a7e4b282ffa96b1d7a7a956ed.setIcon(div_icon_6adf3b142bff169067e2c0488d8de161);
+            
+    
+            var circle_marker_d041331057b158f734bdd389daece3ec = L.circleMarker(
+                [41.7681, 1.854],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_0818e64fc699c5843ce08842fc396e12 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a0a6eaeab6f78739a8a41ebfc463f83f = $(`<div id="html_a0a6eaeab6f78739a8a41ebfc463f83f" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Cabrianes         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 2</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 2</p>     </div>     </div>`)[0];
+                popup_0818e64fc699c5843ce08842fc396e12.setContent(html_a0a6eaeab6f78739a8a41ebfc463f83f);
+            
+        
+
+        circle_marker_d041331057b158f734bdd389daece3ec.bindPopup(popup_0818e64fc699c5843ce08842fc396e12)
+        ;
+
+        
+    
+    
+            circle_marker_d041331057b158f734bdd389daece3ec.bindTooltip(
+                `<div>
+                     Cabrianes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_22b19f94e11b314226f381105ef3f722 = L.marker(
+                [41.7681, 1.854],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_db7da848e065f8f04cdc152a25de8977 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eCabrianes\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_22b19f94e11b314226f381105ef3f722.setIcon(div_icon_db7da848e065f8f04cdc152a25de8977);
+            
+    
+            var circle_marker_931304ba492f05f4509ac35335b6ecde = L.circleMarker(
+                [41.5322, 1.6795],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_ffd9d57c338193dae8b5dfbbf84a0258 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_dd9656814c2e26b1412b21df6a0e0d8e = $(`<div id="html_dd9656814c2e26b1412b21df6a0e0d8e" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Capellades         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_ffd9d57c338193dae8b5dfbbf84a0258.setContent(html_dd9656814c2e26b1412b21df6a0e0d8e);
+            
+        
+
+        circle_marker_931304ba492f05f4509ac35335b6ecde.bindPopup(popup_ffd9d57c338193dae8b5dfbbf84a0258)
+        ;
+
+        
+    
+    
+            circle_marker_931304ba492f05f4509ac35335b6ecde.bindTooltip(
+                `<div>
+                     Capellades
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_f30ff717108ff3e22910e0b3873a3a1f = L.marker(
+                [41.5322, 1.6795],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_d3c83613af824194ec15944c4cc6c750 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eCapellades\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_f30ff717108ff3e22910e0b3873a3a1f.setIcon(div_icon_d3c83613af824194ec15944c4cc6c750);
+            
+    
+            var circle_marker_1c0bacb48335dcf566d64326df91f1a8 = L.circleMarker(
+                [41.2131, 1.6681],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_151f6ea0b085ebb29cf9a77e4f097f2a = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d3d6a39ccbcab29d9d7dddaa9e967bdb = $(`<div id="html_d3d6a39ccbcab29d9d7dddaa9e967bdb" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Cubelles         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_151f6ea0b085ebb29cf9a77e4f097f2a.setContent(html_d3d6a39ccbcab29d9d7dddaa9e967bdb);
+            
+        
+
+        circle_marker_1c0bacb48335dcf566d64326df91f1a8.bindPopup(popup_151f6ea0b085ebb29cf9a77e4f097f2a)
+        ;
+
+        
+    
+    
+            circle_marker_1c0bacb48335dcf566d64326df91f1a8.bindTooltip(
+                `<div>
+                     Cubelles
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_fac6958bff3ef576e39fa9de8cd814d5 = L.marker(
+                [41.2131, 1.6681],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_b08c58ff0e656a1d8c9116e73b5196bb = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eCubelles\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_fac6958bff3ef576e39fa9de8cd814d5.setIcon(div_icon_b08c58ff0e656a1d8c9116e73b5196bb);
+            
+    
+            var circle_marker_136b7fd88c684a0e72b8fd7626dfee1c = L.circleMarker(
+                [42.2674, 2.9621],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_444dd4725b64e14aaa6c38f3324a70c4 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_18266a78c51179839207344b542274ba = $(`<div id="html_18266a78c51179839207344b542274ba" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Figueres         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_444dd4725b64e14aaa6c38f3324a70c4.setContent(html_18266a78c51179839207344b542274ba);
+            
+        
+
+        circle_marker_136b7fd88c684a0e72b8fd7626dfee1c.bindPopup(popup_444dd4725b64e14aaa6c38f3324a70c4)
+        ;
+
+        
+    
+    
+            circle_marker_136b7fd88c684a0e72b8fd7626dfee1c.bindTooltip(
+                `<div>
+                     Figueres
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d18dc951ec53065a7677c0d57ee91e96 = L.marker(
+                [42.2674, 2.9621],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_7b481ee03a12788e7798686008f8ff7e = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eFigueres\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_d18dc951ec53065a7677c0d57ee91e96.setIcon(div_icon_7b481ee03a12788e7798686008f8ff7e);
+            
+    
+            var circle_marker_680fd8c45a642399c1218e7eb98b9cb7 = L.circleMarker(
+                [41.9794, 2.8214],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_083277d9d643c11e678b6fef5c160c7d = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_e81ca9bd5920d1b999bcd69a8bf89fe5 = $(`<div id="html_e81ca9bd5920d1b999bcd69a8bf89fe5" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Girona         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_083277d9d643c11e678b6fef5c160c7d.setContent(html_e81ca9bd5920d1b999bcd69a8bf89fe5);
+            
+        
+
+        circle_marker_680fd8c45a642399c1218e7eb98b9cb7.bindPopup(popup_083277d9d643c11e678b6fef5c160c7d)
+        ;
+
+        
+    
+    
+            circle_marker_680fd8c45a642399c1218e7eb98b9cb7.bindTooltip(
+                `<div>
+                     Girona
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_72f0c031dd6ab96f6dab15e41dfc80e7 = L.marker(
+                [41.9794, 2.8214],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_bf2409b6e1d68cd96e33a313ebeb0402 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eGirona\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_72f0c031dd6ab96f6dab15e41dfc80e7.setIcon(div_icon_bf2409b6e1d68cd96e33a313ebeb0402);
+            
+    
+            var circle_marker_1832067c5d16f83a27c799eecb4d6526 = L.circleMarker(
+                [40.7128, -74.006],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_cec1f14e888f59d014c57224e7698600 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_4e43fb64c7f775ac9a113fa28df71bbf = $(`<div id="html_4e43fb64c7f775ac9a113fa28df71bbf" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Nova York         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> EUA</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_cec1f14e888f59d014c57224e7698600.setContent(html_4e43fb64c7f775ac9a113fa28df71bbf);
+            
+        
+
+        circle_marker_1832067c5d16f83a27c799eecb4d6526.bindPopup(popup_cec1f14e888f59d014c57224e7698600)
+        ;
+
+        
+    
+    
+            circle_marker_1832067c5d16f83a27c799eecb4d6526.bindTooltip(
+                `<div>
+                     Nova York
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_3f0d3ea0f2323a375874fb9b3b0c1c83 = L.marker(
+                [40.7128, -74.006],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_5154e713e0c9f137f1ec9d69534cff5e = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eNova York\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_3f0d3ea0f2323a375874fb9b3b0c1c83.setIcon(div_icon_5154e713e0c9f137f1ec9d69534cff5e);
+            
+    
+            var circle_marker_5efd0c7e5a7c371b7e3cac5b93a1bbd8 = L.circleMarker(
+                [41.5403, 2.1508],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_5992ea740966d4ba8f50ff6bb442bb6b = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_51f0e78a3c84d369cc9aa3035fd3e59a = $(`<div id="html_51f0e78a3c84d369cc9aa3035fd3e59a" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Polinyà         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_5992ea740966d4ba8f50ff6bb442bb6b.setContent(html_51f0e78a3c84d369cc9aa3035fd3e59a);
+            
+        
+
+        circle_marker_5efd0c7e5a7c371b7e3cac5b93a1bbd8.bindPopup(popup_5992ea740966d4ba8f50ff6bb442bb6b)
+        ;
+
+        
+    
+    
+            circle_marker_5efd0c7e5a7c371b7e3cac5b93a1bbd8.bindTooltip(
+                `<div>
+                     Polinyà
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_13235554fa523d571766e55b540899e2 = L.marker(
+                [41.5403, 2.1508],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_02bc7e6db906b88561459590125b87cf = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003ePoliny\u00e0\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_13235554fa523d571766e55b540899e2.setIcon(div_icon_02bc7e6db906b88561459590125b87cf);
+            
+    
+            var circle_marker_89b2442fa70992736a431d0d2b331a4b = L.circleMarker(
+                [41.9028, 12.4964],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_0534dd8835ddb2a5f183cf81f42133c7 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_5044e6a0c6e9ef3f396afbeed7a92d79 = $(`<div id="html_5044e6a0c6e9ef3f396afbeed7a92d79" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Roma         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Itàlia</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 2</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 2</p>     </div>     </div>`)[0];
+                popup_0534dd8835ddb2a5f183cf81f42133c7.setContent(html_5044e6a0c6e9ef3f396afbeed7a92d79);
+            
+        
+
+        circle_marker_89b2442fa70992736a431d0d2b331a4b.bindPopup(popup_0534dd8835ddb2a5f183cf81f42133c7)
+        ;
+
+        
+    
+    
+            circle_marker_89b2442fa70992736a431d0d2b331a4b.bindTooltip(
+                `<div>
+                     Roma
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c78a974e60a2ade6db08533fd197eac9 = L.marker(
+                [41.9028, 12.4964],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_5a86e797a4eb3e7a407d37dafcd9c22c = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eRoma\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_c78a974e60a2ade6db08533fd197eac9.setIcon(div_icon_5a86e797a4eb3e7a407d37dafcd9c22c);
+            
+    
+            var circle_marker_6930119981947e8404d133048fea07c4 = L.circleMarker(
+                [41.4725, 2.0847],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#0078d4", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 14, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_b55e358178c5e27776c24e2d41ac39a6 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a107bd2a6fb1e71a9ccea596448273a1 = $(`<div id="html_a107bd2a6fb1e71a9ccea596448273a1" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Sant Cugat         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 25</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 25</p>     </div>     </div>`)[0];
+                popup_b55e358178c5e27776c24e2d41ac39a6.setContent(html_a107bd2a6fb1e71a9ccea596448273a1);
+            
+        
+
+        circle_marker_6930119981947e8404d133048fea07c4.bindPopup(popup_b55e358178c5e27776c24e2d41ac39a6)
+        ;
+
+        
+    
+    
+            circle_marker_6930119981947e8404d133048fea07c4.bindTooltip(
+                `<div>
+                     Sant Cugat
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_9fb4f30ab41e8257f51debddf9620747 = L.marker(
+                [41.4725, 2.0847],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_c630b035a2b667f8f04a0c6d7e38d1eb = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eSant Cugat\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_9fb4f30ab41e8257f51debddf9620747.setIcon(div_icon_c630b035a2b667f8f04a0c6d7e38d1eb);
+            
+    
+            var circle_marker_f14e24dd41b4bb73ca7966ed132aa760 = L.circleMarker(
+                [41.5269, 2.0847],
+                {"bubblingMouseEvents": true, "color": "white", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#00bcf2", "fillOpacity": 0.8, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_a4944d28981a281397ebed4975deb769 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_ab84d6499c1d96a6b42aad8fe4709865 = $(`<div id="html_ab84d6499c1d96a6b42aad8fe4709865" style="width: 100.0%; height: 100.0%;">     <div style="font-family: Arial, sans-serif; width: 220px;">         <h4 style="color: #0078d4; margin-bottom: 10px; border-bottom: 2px solid #0078d4; padding-bottom: 5px;">             Sant Quirze         </h4>         <p style="margin: 5px 0;"><strong>País:</strong> Espanya</p>         <p style="margin: 5px 0;"><strong>Total cartes:</strong> 1</p>         <p style="margin: 5px 0; color: #0078d4;"><strong>Emissió:</strong> 0</p>         <p style="margin: 5px 0; color: #ff8c00;"><strong>Recepció:</strong> 1</p>     </div>     </div>`)[0];
+                popup_a4944d28981a281397ebed4975deb769.setContent(html_ab84d6499c1d96a6b42aad8fe4709865);
+            
+        
+
+        circle_marker_f14e24dd41b4bb73ca7966ed132aa760.bindPopup(popup_a4944d28981a281397ebed4975deb769)
+        ;
+
+        
+    
+    
+            circle_marker_f14e24dd41b4bb73ca7966ed132aa760.bindTooltip(
+                `<div>
+                     Sant Quirze
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_cfa2173449c9b383c5aae6fff2a36252 = L.marker(
+                [41.5269, 2.0847],
+                {
+}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+            var div_icon_975e86a460f6d9e847f331823af69177 = L.divIcon({
+  "html": "\n            \u003cdiv style=\"\n                background: white;\n                padding: 3px 8px;\n                border-radius: 3px;\n                font-size: 11px;\n                font-weight: 600;\n                white-space: nowrap;\n                box-shadow: 0 1px 4px rgba(0,0,0,0.3);\n                border: 1px solid #ddd;\n            \"\u003eSant Quirze\u003c/div\u003e\n        ",
+  "className": "empty",
+});
+        
+    
+                marker_cfa2173449c9b383c5aae6fff2a36252.setIcon(div_icon_975e86a460f6d9e847f331823af69177);
+            
+    
+            var poly_line_7b1b7bbdb4b6770bdb5b13d4d48a5d98 = L.polyline(
+                [[41.5804, 2.5488], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_f7914f859e4f87782f2e2ae334aca340 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6491f8a2aabdb2098a0e1e5f4d4c9846 = $(`<div id="html_6491f8a2aabdb2098a0e1e5f4d4c9846" style="width: 100.0%; height: 100.0%;"><b>Arenys de Mar → Sant Cugat</b><br>2 cartes</div>`)[0];
+                popup_f7914f859e4f87782f2e2ae334aca340.setContent(html_6491f8a2aabdb2098a0e1e5f4d4c9846);
+            
+        
+
+        poly_line_7b1b7bbdb4b6770bdb5b13d4d48a5d98.bindPopup(popup_f7914f859e4f87782f2e2ae334aca340)
+        ;
+
+        
+    
+    
+            poly_line_7b1b7bbdb4b6770bdb5b13d4d48a5d98.bindTooltip(
+                `<div>
+                     Arenys de Mar → Sant Cugat: 2 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d659cd5e02f9def5e3a203ddc69000c2 = L.polyline(
+                [[41.3874, 2.1686], [41.5539, 2.4009]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_443a907ebd861264af0218274746e2ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1e578113faf936ae7f545ab2ae8bba1a = $(`<div id="html_1e578113faf936ae7f545ab2ae8bba1a" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Argentona</b><br>1 cartes</div>`)[0];
+                popup_443a907ebd861264af0218274746e2ad.setContent(html_1e578113faf936ae7f545ab2ae8bba1a);
+            
+        
+
+        poly_line_d659cd5e02f9def5e3a203ddc69000c2.bindPopup(popup_443a907ebd861264af0218274746e2ad)
+        ;
+
+        
+    
+    
+            poly_line_d659cd5e02f9def5e3a203ddc69000c2.bindTooltip(
+                `<div>
+                     Barcelona → Argentona: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e33d20f531bc38a442fee359bbb35387 = L.polyline(
+                [[41.3874, 2.1686], [41.2855, 1.87]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_ed0a06fd493575de15d9aefbd0d6318b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9be151266efbe903e9c68a08e0e8fa16 = $(`<div id="html_9be151266efbe903e9c68a08e0e8fa16" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Begues</b><br>1 cartes</div>`)[0];
+                popup_ed0a06fd493575de15d9aefbd0d6318b.setContent(html_9be151266efbe903e9c68a08e0e8fa16);
+            
+        
+
+        poly_line_e33d20f531bc38a442fee359bbb35387.bindPopup(popup_ed0a06fd493575de15d9aefbd0d6318b)
+        ;
+
+        
+    
+    
+            poly_line_e33d20f531bc38a442fee359bbb35387.bindTooltip(
+                `<div>
+                     Barcelona → Begues: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2ccb71d0e59802f4d069a020c4586e5a = L.polyline(
+                [[41.3874, 2.1686], [41.7681, 1.854]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_da20fa9b1d76fcce51e72c33465bcba5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1ce611ce4aed8651e14a0686bb531c5f = $(`<div id="html_1ce611ce4aed8651e14a0686bb531c5f" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Cabrianes</b><br>2 cartes</div>`)[0];
+                popup_da20fa9b1d76fcce51e72c33465bcba5.setContent(html_1ce611ce4aed8651e14a0686bb531c5f);
+            
+        
+
+        poly_line_2ccb71d0e59802f4d069a020c4586e5a.bindPopup(popup_da20fa9b1d76fcce51e72c33465bcba5)
+        ;
+
+        
+    
+    
+            poly_line_2ccb71d0e59802f4d069a020c4586e5a.bindTooltip(
+                `<div>
+                     Barcelona → Cabrianes: 2 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5879803f91d33a9b878119c4e59d044f = L.polyline(
+                [[41.3874, 2.1686], [41.5322, 1.6795]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_601f267413a72d61313a36b75c52241c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9e45bc1f4cfe785ebe91752464c818c4 = $(`<div id="html_9e45bc1f4cfe785ebe91752464c818c4" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Capellades</b><br>1 cartes</div>`)[0];
+                popup_601f267413a72d61313a36b75c52241c.setContent(html_9e45bc1f4cfe785ebe91752464c818c4);
+            
+        
+
+        poly_line_5879803f91d33a9b878119c4e59d044f.bindPopup(popup_601f267413a72d61313a36b75c52241c)
+        ;
+
+        
+    
+    
+            poly_line_5879803f91d33a9b878119c4e59d044f.bindTooltip(
+                `<div>
+                     Barcelona → Capellades: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_3404d0eb6791854314fecf5ac2e06b9e = L.polyline(
+                [[41.3874, 2.1686], [19.4326, -99.1332]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_f2d4cecea263efed0af6e9ddeaa4af82 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5503fd6c56b866cc53f0e1124646e2e4 = $(`<div id="html_5503fd6c56b866cc53f0e1124646e2e4" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Ciutat de Mèxic</b><br>3 cartes</div>`)[0];
+                popup_f2d4cecea263efed0af6e9ddeaa4af82.setContent(html_5503fd6c56b866cc53f0e1124646e2e4);
+            
+        
+
+        poly_line_3404d0eb6791854314fecf5ac2e06b9e.bindPopup(popup_f2d4cecea263efed0af6e9ddeaa4af82)
+        ;
+
+        
+    
+    
+            poly_line_3404d0eb6791854314fecf5ac2e06b9e.bindTooltip(
+                `<div>
+                     Barcelona → Ciutat de Mèxic: 3 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_0a828a93f4f46fc07e34b409a7e035b9 = L.polyline(
+                [[41.3874, 2.1686], [41.2131, 1.6681]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_f60ff2e8bd20e4e0a250e0556f815bb3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b8355130f257927094110f7d4e7f438d = $(`<div id="html_b8355130f257927094110f7d4e7f438d" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Cubelles</b><br>1 cartes</div>`)[0];
+                popup_f60ff2e8bd20e4e0a250e0556f815bb3.setContent(html_b8355130f257927094110f7d4e7f438d);
+            
+        
+
+        poly_line_0a828a93f4f46fc07e34b409a7e035b9.bindPopup(popup_f60ff2e8bd20e4e0a250e0556f815bb3)
+        ;
+
+        
+    
+    
+            poly_line_0a828a93f4f46fc07e34b409a7e035b9.bindTooltip(
+                `<div>
+                     Barcelona → Cubelles: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_6280dd75a382c003ff57962775e176ab = L.polyline(
+                [[41.3874, 2.1686], [42.2674, 2.9621]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_daaff41da59a59f54b169f29ad4cfa6f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e17324c32b698a558303e0313991e94d = $(`<div id="html_e17324c32b698a558303e0313991e94d" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Figueres</b><br>1 cartes</div>`)[0];
+                popup_daaff41da59a59f54b169f29ad4cfa6f.setContent(html_e17324c32b698a558303e0313991e94d);
+            
+        
+
+        poly_line_6280dd75a382c003ff57962775e176ab.bindPopup(popup_daaff41da59a59f54b169f29ad4cfa6f)
+        ;
+
+        
+    
+    
+            poly_line_6280dd75a382c003ff57962775e176ab.bindTooltip(
+                `<div>
+                     Barcelona → Figueres: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_925414f9b0552d6722638437c9589f98 = L.polyline(
+                [[41.3874, 2.1686], [41.9794, 2.8214]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_cec142b3b56e0fa0af57de782deb9fea = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2819a8cff9ec8da6db2fc43f9b2d036b = $(`<div id="html_2819a8cff9ec8da6db2fc43f9b2d036b" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Girona</b><br>1 cartes</div>`)[0];
+                popup_cec142b3b56e0fa0af57de782deb9fea.setContent(html_2819a8cff9ec8da6db2fc43f9b2d036b);
+            
+        
+
+        poly_line_925414f9b0552d6722638437c9589f98.bindPopup(popup_cec142b3b56e0fa0af57de782deb9fea)
+        ;
+
+        
+    
+    
+            poly_line_925414f9b0552d6722638437c9589f98.bindTooltip(
+                `<div>
+                     Barcelona → Girona: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_96a822a4e75d3fa5706080dc3ebe48ea = L.polyline(
+                [[41.3874, 2.1686], [51.5074, -0.1278]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_89ee629255e33eaf4aa6f1487caf9bbf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b49a6f8d5469f6f3a67ae962e7fadc30 = $(`<div id="html_b49a6f8d5469f6f3a67ae962e7fadc30" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Londres</b><br>1 cartes</div>`)[0];
+                popup_89ee629255e33eaf4aa6f1487caf9bbf.setContent(html_b49a6f8d5469f6f3a67ae962e7fadc30);
+            
+        
+
+        poly_line_96a822a4e75d3fa5706080dc3ebe48ea.bindPopup(popup_89ee629255e33eaf4aa6f1487caf9bbf)
+        ;
+
+        
+    
+    
+            poly_line_96a822a4e75d3fa5706080dc3ebe48ea.bindTooltip(
+                `<div>
+                     Barcelona → Londres: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bd1e613b9736de89fc249249ec1e48c5 = L.polyline(
+                [[41.3874, 2.1686], [41.5403, 2.1508]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_bce18fb458d5f2ad0718fb1e159b47c3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c8b8e52f13489d61c78503213e624bab = $(`<div id="html_c8b8e52f13489d61c78503213e624bab" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Polinyà</b><br>1 cartes</div>`)[0];
+                popup_bce18fb458d5f2ad0718fb1e159b47c3.setContent(html_c8b8e52f13489d61c78503213e624bab);
+            
+        
+
+        poly_line_bd1e613b9736de89fc249249ec1e48c5.bindPopup(popup_bce18fb458d5f2ad0718fb1e159b47c3)
+        ;
+
+        
+    
+    
+            poly_line_bd1e613b9736de89fc249249ec1e48c5.bindTooltip(
+                `<div>
+                     Barcelona → Polinyà: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2b74aaf0ad7a2caffb7e1ac688ecf145 = L.polyline(
+                [[41.3874, 2.1686], [41.9028, 12.4964]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_10a68e47dc6a0f685a6f79207e7bc8cd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_387238b6ab67a778738a5609bf47cd7d = $(`<div id="html_387238b6ab67a778738a5609bf47cd7d" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Roma</b><br>2 cartes</div>`)[0];
+                popup_10a68e47dc6a0f685a6f79207e7bc8cd.setContent(html_387238b6ab67a778738a5609bf47cd7d);
+            
+        
+
+        poly_line_2b74aaf0ad7a2caffb7e1ac688ecf145.bindPopup(popup_10a68e47dc6a0f685a6f79207e7bc8cd)
+        ;
+
+        
+    
+    
+            poly_line_2b74aaf0ad7a2caffb7e1ac688ecf145.bindTooltip(
+                `<div>
+                     Barcelona → Roma: 2 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f94af0b3a69a06f7607c6bc4b345f1fe = L.polyline(
+                [[41.3874, 2.1686], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_2be0571f5a61c8fa7b259779a196322f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3b39b7d02ae06fee38c841e85efbe1ca = $(`<div id="html_3b39b7d02ae06fee38c841e85efbe1ca" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Sant Cugat</b><br>9 cartes</div>`)[0];
+                popup_2be0571f5a61c8fa7b259779a196322f.setContent(html_3b39b7d02ae06fee38c841e85efbe1ca);
+            
+        
+
+        poly_line_f94af0b3a69a06f7607c6bc4b345f1fe.bindPopup(popup_2be0571f5a61c8fa7b259779a196322f)
+        ;
+
+        
+    
+    
+            poly_line_f94af0b3a69a06f7607c6bc4b345f1fe.bindTooltip(
+                `<div>
+                     Barcelona → Sant Cugat: 9 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_f30eaac5ebce132a372b8ac0102c2417 = L.polyline(
+                [[41.3874, 2.1686], [41.5269, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_2a817212c26f10063e17545eec71650f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d06a6e1019f2d8f92524a949b64fd60d = $(`<div id="html_d06a6e1019f2d8f92524a949b64fd60d" style="width: 100.0%; height: 100.0%;"><b>Barcelona → Sant Quirze</b><br>1 cartes</div>`)[0];
+                popup_2a817212c26f10063e17545eec71650f.setContent(html_d06a6e1019f2d8f92524a949b64fd60d);
+            
+        
+
+        poly_line_f30eaac5ebce132a372b8ac0102c2417.bindPopup(popup_2a817212c26f10063e17545eec71650f)
+        ;
+
+        
+    
+    
+            poly_line_f30eaac5ebce132a372b8ac0102c2417.bindTooltip(
+                `<div>
+                     Barcelona → Sant Quirze: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_e92755993a4b6d4ffed31f6f36347dd8 = L.polyline(
+                [[41.5025, 2.1083], [19.4326, -99.1332]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_952b35eba6143ed7b48ffaa201c9e041 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_516d857947f4f1b73eb5b4a27b010cb9 = $(`<div id="html_516d857947f4f1b73eb5b4a27b010cb9" style="width: 100.0%; height: 100.0%;"><b>Bellaterra → Ciutat de Mèxic</b><br>3 cartes</div>`)[0];
+                popup_952b35eba6143ed7b48ffaa201c9e041.setContent(html_516d857947f4f1b73eb5b4a27b010cb9);
+            
+        
+
+        poly_line_e92755993a4b6d4ffed31f6f36347dd8.bindPopup(popup_952b35eba6143ed7b48ffaa201c9e041)
+        ;
+
+        
+    
+    
+            poly_line_e92755993a4b6d4ffed31f6f36347dd8.bindTooltip(
+                `<div>
+                     Bellaterra → Ciutat de Mèxic: 3 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a169c65134b2ea42942e005a4204481c = L.polyline(
+                [[44.8378, -0.5792], [41.3874, 2.1686]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_2c5b51db70ed74da07d763b568e41c5d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5850f0a2f34785f68b16b464000690ab = $(`<div id="html_5850f0a2f34785f68b16b464000690ab" style="width: 100.0%; height: 100.0%;"><b>Bordeus → Barcelona</b><br>1 cartes</div>`)[0];
+                popup_2c5b51db70ed74da07d763b568e41c5d.setContent(html_5850f0a2f34785f68b16b464000690ab);
+            
+        
+
+        poly_line_a169c65134b2ea42942e005a4204481c.bindPopup(popup_2c5b51db70ed74da07d763b568e41c5d)
+        ;
+
+        
+    
+    
+            poly_line_a169c65134b2ea42942e005a4204481c.bindTooltip(
+                `<div>
+                     Bordeus → Barcelona: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_d7e57c0146403d86bacc9693f1717d95 = L.polyline(
+                [[19.4326, -99.1332], [41.3874, 2.1686]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.6, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_77402d560a0cf0640027eb0f8f8886a9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_267a00764c9c13a62d2b0497501922cd = $(`<div id="html_267a00764c9c13a62d2b0497501922cd" style="width: 100.0%; height: 100.0%;"><b>Ciutat de Mèxic → Barcelona</b><br>9 cartes</div>`)[0];
+                popup_77402d560a0cf0640027eb0f8f8886a9.setContent(html_267a00764c9c13a62d2b0497501922cd);
+            
+        
+
+        poly_line_d7e57c0146403d86bacc9693f1717d95.bindPopup(popup_77402d560a0cf0640027eb0f8f8886a9)
+        ;
+
+        
+    
+    
+            poly_line_d7e57c0146403d86bacc9693f1717d95.bindTooltip(
+                `<div>
+                     Ciutat de Mèxic → Barcelona: 9 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_7982076b65f74546bf99fa82d4b9521b = L.polyline(
+                [[19.4326, -99.1332], [41.5025, 2.1083]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_6df156342ea21c5283453b55655577f0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9c9791f6339b13f261e5dd6d939a6175 = $(`<div id="html_9c9791f6339b13f261e5dd6d939a6175" style="width: 100.0%; height: 100.0%;"><b>Ciutat de Mèxic → Bellaterra</b><br>3 cartes</div>`)[0];
+                popup_6df156342ea21c5283453b55655577f0.setContent(html_9c9791f6339b13f261e5dd6d939a6175);
+            
+        
+
+        poly_line_7982076b65f74546bf99fa82d4b9521b.bindPopup(popup_6df156342ea21c5283453b55655577f0)
+        ;
+
+        
+    
+    
+            poly_line_7982076b65f74546bf99fa82d4b9521b.bindTooltip(
+                `<div>
+                     Ciutat de Mèxic → Bellaterra: 3 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_898091e1b0d1f39c0ba75a3af5832d94 = L.polyline(
+                [[19.4326, -99.1332], [40.7128, -74.006]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_376c1cafc80e3f5cdff8242b74c5e3d3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7f966980e01df0bd7f18d94df5656f41 = $(`<div id="html_7f966980e01df0bd7f18d94df5656f41" style="width: 100.0%; height: 100.0%;"><b>Ciutat de Mèxic → Nova York</b><br>1 cartes</div>`)[0];
+                popup_376c1cafc80e3f5cdff8242b74c5e3d3.setContent(html_7f966980e01df0bd7f18d94df5656f41);
+            
+        
+
+        poly_line_898091e1b0d1f39c0ba75a3af5832d94.bindPopup(popup_376c1cafc80e3f5cdff8242b74c5e3d3)
+        ;
+
+        
+    
+    
+            poly_line_898091e1b0d1f39c0ba75a3af5832d94.bindTooltip(
+                `<div>
+                     Ciutat de Mèxic → Nova York: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_539e502251be6278943042ae3390fe0a = L.polyline(
+                [[19.4326, -99.1332], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_c0a4eeb78633486798439bc73b9910ed = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_21a5a1a148f2f2a80cb58c284b3ac023 = $(`<div id="html_21a5a1a148f2f2a80cb58c284b3ac023" style="width: 100.0%; height: 100.0%;"><b>Ciutat de Mèxic → Sant Cugat</b><br>11 cartes</div>`)[0];
+                popup_c0a4eeb78633486798439bc73b9910ed.setContent(html_21a5a1a148f2f2a80cb58c284b3ac023);
+            
+        
+
+        poly_line_539e502251be6278943042ae3390fe0a.bindPopup(popup_c0a4eeb78633486798439bc73b9910ed)
+        ;
+
+        
+    
+    
+            poly_line_539e502251be6278943042ae3390fe0a.bindTooltip(
+                `<div>
+                     Ciutat de Mèxic → Sant Cugat: 11 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c85371e2de780dd12cbd1e72aa542de8 = L.polyline(
+                [[41.0082, 28.9784], [41.3874, 2.1686]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_e7c1a53b8c84eaf026294927f0013dc5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_24859f41e224e79b1319c3cd373d41f3 = $(`<div id="html_24859f41e224e79b1319c3cd373d41f3" style="width: 100.0%; height: 100.0%;"><b>Estambul → Barcelona</b><br>1 cartes</div>`)[0];
+                popup_e7c1a53b8c84eaf026294927f0013dc5.setContent(html_24859f41e224e79b1319c3cd373d41f3);
+            
+        
+
+        poly_line_c85371e2de780dd12cbd1e72aa542de8.bindPopup(popup_e7c1a53b8c84eaf026294927f0013dc5)
+        ;
+
+        
+    
+    
+            poly_line_c85371e2de780dd12cbd1e72aa542de8.bindTooltip(
+                `<div>
+                     Estambul → Barcelona: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_c636fefea79bb35eaa476f10389cfa3e = L.polyline(
+                [[20.6597, -103.3496], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_698278214d0573fe51dd92d31517960b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dddb14edc0e16d8dcee7885952a74ba5 = $(`<div id="html_dddb14edc0e16d8dcee7885952a74ba5" style="width: 100.0%; height: 100.0%;"><b>Guadalajara → Sant Cugat</b><br>1 cartes</div>`)[0];
+                popup_698278214d0573fe51dd92d31517960b.setContent(html_dddb14edc0e16d8dcee7885952a74ba5);
+            
+        
+
+        poly_line_c636fefea79bb35eaa476f10389cfa3e.bindPopup(popup_698278214d0573fe51dd92d31517960b)
+        ;
+
+        
+    
+    
+            poly_line_c636fefea79bb35eaa476f10389cfa3e.bindTooltip(
+                `<div>
+                     Guadalajara → Sant Cugat: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_bc5bb39959367ae66187f1635c29056b = L.polyline(
+                [[51.5074, -0.1278], [41.3874, 2.1686]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_dd67c25c7733f8659d3a129cfc2a2a93 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4038f9ca556d70fcb212f073eb3e14a5 = $(`<div id="html_4038f9ca556d70fcb212f073eb3e14a5" style="width: 100.0%; height: 100.0%;"><b>Londres → Barcelona</b><br>1 cartes</div>`)[0];
+                popup_dd67c25c7733f8659d3a129cfc2a2a93.setContent(html_4038f9ca556d70fcb212f073eb3e14a5);
+            
+        
+
+        poly_line_bc5bb39959367ae66187f1635c29056b.bindPopup(popup_dd67c25c7733f8659d3a129cfc2a2a93)
+        ;
+
+        
+    
+    
+            poly_line_bc5bb39959367ae66187f1635c29056b.bindTooltip(
+                `<div>
+                     Londres → Barcelona: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_584ebf6c4def4b2f150a241aa22878a9 = L.polyline(
+                [[40.4168, -3.7038], [41.5025, 2.1083]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_a547f25dc24995f7914afa2139afd282 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6e9044ada996e80ea19624011c2dd8ee = $(`<div id="html_6e9044ada996e80ea19624011c2dd8ee" style="width: 100.0%; height: 100.0%;"><b>Madrid → Bellaterra</b><br>1 cartes</div>`)[0];
+                popup_a547f25dc24995f7914afa2139afd282.setContent(html_6e9044ada996e80ea19624011c2dd8ee);
+            
+        
+
+        poly_line_584ebf6c4def4b2f150a241aa22878a9.bindPopup(popup_a547f25dc24995f7914afa2139afd282)
+        ;
+
+        
+    
+    
+            poly_line_584ebf6c4def4b2f150a241aa22878a9.bindTooltip(
+                `<div>
+                     Madrid → Bellaterra: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_831f968f0b90833de20dd4f8d51e53ac = L.polyline(
+                [[41.5908, 2.1722], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_6c6ff7112305bf80f42f279cbf886b9b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_762ce920dfbf35783bdaa29a4a275faf = $(`<div id="html_762ce920dfbf35783bdaa29a4a275faf" style="width: 100.0%; height: 100.0%;"><b>PalauSolità i Plegamans → Sant Cugat</b><br>1 cartes</div>`)[0];
+                popup_6c6ff7112305bf80f42f279cbf886b9b.setContent(html_762ce920dfbf35783bdaa29a4a275faf);
+            
+        
+
+        poly_line_831f968f0b90833de20dd4f8d51e53ac.bindPopup(popup_6c6ff7112305bf80f42f279cbf886b9b)
+        ;
+
+        
+    
+    
+            poly_line_831f968f0b90833de20dd4f8d51e53ac.bindTooltip(
+                `<div>
+                     PalauSolità i Plegamans → Sant Cugat: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_a81b8051c963ad99c313e33d2d9f20fb = L.polyline(
+                [[40.4659, 0.1778], [41.4725, 2.0847]],
+                {"bubblingMouseEvents": true, "color": "#0078d4", "dashArray": "5, 5", "dashOffset": null, "fill": false, "fillColor": "#0078d4", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.3, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+        var popup_72ea37ff99193cda18f118edd543cd88 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d97f97502b9ca670951c0d87f7e0b3b2 = $(`<div id="html_d97f97502b9ca670951c0d87f7e0b3b2" style="width: 100.0%; height: 100.0%;"><b>Sant Mateu → Sant Cugat</b><br>1 cartes</div>`)[0];
+                popup_72ea37ff99193cda18f118edd543cd88.setContent(html_d97f97502b9ca670951c0d87f7e0b3b2);
+            
+        
+
+        poly_line_a81b8051c963ad99c313e33d2d9f20fb.bindPopup(popup_72ea37ff99193cda18f118edd543cd88)
+        ;
+
+        
+    
+    
+            poly_line_a81b8051c963ad99c313e33d2d9f20fb.bindTooltip(
+                `<div>
+                     Sant Mateu → Sant Cugat: 1 cartes
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            tile_layer_08f89f2f1aa3e30f497c16ec6a6eb538.addTo(map_2685aee2598240f8419dcd5670e670ed);
+        
+    
+                marker_a0d94582ca5409e6afc48afcd13112a3.setIcon(div_icon_aca3b1b71426efd9a15a60d5698e502f);
+            
+    
+                marker_d8444d5c71ab02e389a7615f99a4daeb.setIcon(div_icon_bbb066ec825e45d1c917648fb90458e4);
+            
+    
+                marker_370f47cf4989d75e5a01f472af74d800.setIcon(div_icon_08e622d6bf6bdb7afe32a2c30943c3f9);
+            
+    
+                marker_da59f41f706f6f9de9f2ec577de0e3cb.setIcon(div_icon_6d91f7fbeb0f6793d21b95a57ef1a7b0);
+            
+    
+                marker_7684161ba37c54c79c65d51d98cb696d.setIcon(div_icon_a4d0fa349637ad989655f355ce9f1803);
+            
+    
+                marker_f9a8f279a867778f7093396bc8fc14ea.setIcon(div_icon_7f139cbb6f023bdb5f0eef97b0e0c025);
+            
+    
+                marker_577381c3d234f0ba1eb188dc047ee486.setIcon(div_icon_94d1446801770cefc79ab510c20e0f4b);
+            
+    
+                marker_393107817fc2268ae2e5f9e8b2a927bb.setIcon(div_icon_561b3e73a2fd2494aac1dad6184276b9);
+            
+    
+                marker_c8d744eb196c1b9a894c19579104ea2a.setIcon(div_icon_e0b47e1104cf2542ea7afddf1caaecc2);
+            
+    
+                marker_6c5cf88eed82abb87ba2201b4913c70b.setIcon(div_icon_7fcaef0db2312f027b1937c5cf6a6605);
+            
+    
+                marker_df73f4820bfced85e8508741350b7f06.setIcon(div_icon_f00d039012b161ab3cd910261adcd8e4);
+            
+    
+                marker_19d66d02ee254e51b333315ec0b4d446.setIcon(div_icon_11dedb6f8530a4e863bdcd894f8289c5);
+            
+    
+                marker_3832192a7e4b282ffa96b1d7a7a956ed.setIcon(div_icon_6adf3b142bff169067e2c0488d8de161);
+            
+    
+                marker_22b19f94e11b314226f381105ef3f722.setIcon(div_icon_db7da848e065f8f04cdc152a25de8977);
+            
+    
+                marker_f30ff717108ff3e22910e0b3873a3a1f.setIcon(div_icon_d3c83613af824194ec15944c4cc6c750);
+            
+    
+                marker_fac6958bff3ef576e39fa9de8cd814d5.setIcon(div_icon_b08c58ff0e656a1d8c9116e73b5196bb);
+            
+    
+                marker_d18dc951ec53065a7677c0d57ee91e96.setIcon(div_icon_7b481ee03a12788e7798686008f8ff7e);
+            
+    
+                marker_72f0c031dd6ab96f6dab15e41dfc80e7.setIcon(div_icon_bf2409b6e1d68cd96e33a313ebeb0402);
+            
+    
+                marker_3f0d3ea0f2323a375874fb9b3b0c1c83.setIcon(div_icon_5154e713e0c9f137f1ec9d69534cff5e);
+            
+    
+                marker_13235554fa523d571766e55b540899e2.setIcon(div_icon_02bc7e6db906b88561459590125b87cf);
+            
+    
+                marker_c78a974e60a2ade6db08533fd197eac9.setIcon(div_icon_5a86e797a4eb3e7a407d37dafcd9c22c);
+            
+    
+                marker_9fb4f30ab41e8257f51debddf9620747.setIcon(div_icon_c630b035a2b667f8f04a0c6d7e38d1eb);
+            
+    
+                marker_cfa2173449c9b383c5aae6fff2a36252.setIcon(div_icon_975e86a460f6d9e847f331823af69177);
+            
+</script>
+</html>
